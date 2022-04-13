@@ -13,7 +13,7 @@ from splinter import Browser
 
 def scrape_all():
     # initialize chrome browser
-    browser = Browser('chrome', **executable_path, headless=False)
+    browser = Browser('chrome', executable_path="chromedriver", headless=False)
 
     # Pairs
     news_title, news_paragraph = mars_news(browser)
@@ -69,10 +69,6 @@ def featured_image(browser):
     # Use spliter, find and get `featured_image_url`
     featured_image_url = "https://spaceimages-mars.com/image/featured/mars1.jpg"
     featured_image_url
-
-    # Alternative 
-    full_image = browser.find_by_id("full_image")[0]
-    full_image.click()
 
     # html object
     html = browser.html

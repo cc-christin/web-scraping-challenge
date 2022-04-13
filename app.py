@@ -1,8 +1,8 @@
 ## Step 2 - MongoDB and Flask Application
 
 # Imports
-from flask import Flask, render_template
 from flask_pymongo import PyMongo
+from flask import Flask, render_template, redirect
 import scrape_mars
 
 # flask app
@@ -21,12 +21,12 @@ def index():
     return render_template("index.html", mars_db=mars)
 
 # scrape
-@app.route("/")
+@app.route("/scrape")
 def scrape():
-    mars=mongo.db.mars_db
-    data = scraping.scrape_all()
-    mars.update({}, data, upsert=True)
-    return "Finsihed Scraping"
+    mars = mongo.db.mars_db
+    data = scrape_mars.scrape_all()
+    mars.update_one({}, {"$set": data}, upsert=True)
+    return redirect("/", code=302)
 
 if __name__ == "__main__":
     app.run(debug=True)
